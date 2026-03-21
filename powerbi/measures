@@ -1,0 +1,13 @@
+##DAX measures
+
+##REVENUE
+Revenue = SUM(Analisis_Datos_Clientes[PrecioTotal])
+
+##ORDERS
+Orders = DISTINCTCOUNT(Analisis_Datos_Clientes[NumPedido])
+
+##UNITS
+Units = SUM(Analisis_Datos_Clientes[CantidadProductos])
+
+##AVG_ORDER_VALUE
+Avg Order Value = DIVIDE([Revenue], [Orders])

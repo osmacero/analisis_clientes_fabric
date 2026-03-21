@@ -1,0 +1,29 @@
+-- table preview
+SELECT TOP 20 * FROM dbo.Analisis_Datos_Clientes;
+
+-- schema
+SELECT COLUMN_NAME, DATA_TYPE
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_SCHEMA='dbo' AND TABLE_NAME='Analisis_Datos_Clientes'
+ORDER BY ORDINAL_POSITION;
+
+B-25755	257	2	Muebles	Bano	514
+B-25755	134	2	Muebles	Bano	268
+B-25757	98	2	Muebles	Bano	196
+B-25770	299	2	Muebles	Bano	598
+B-25774	38	2	Muebles	Bano	76
+B-25797	148	2	Muebles	Bano	296
+B-25799	45	2	Muebles	Bano	90
+B-25805	112	2	Muebles	Bano	224
+B-25818	94	2	Muebles	Bano	188
+B-25823	104	2	Muebles	Bano	208
+B-25823	103	2	Muebles	Bano	206
+B-25824	101	2	Muebles	Bano	202
+B-25840	246	2	Muebles	Bano	492
+B-25840	298	2	Muebles	Bano	596
+B-25857	227	2	Muebles	Bano	454
+B-25858	223	2	Muebles	Bano	446
+B-25859	724	2	Muebles	Bano	1448
+B-25868	1118	2	Muebles	Bano	2236
+B-25885	394	2	Muebles	Bano	788
+B-25885	734	2	Muebles	Bano	1468

@@ -1,0 +1,19 @@
+let
+  Source = Lakehouse.Contents(null),
+  Navigation = Source{[workspaceId = "3fae01af-f560-43ea-b132-7d5b6650da37"]}[Data],
+  #"Navigation 1" = Navigation{[lakehouseId = "6bc3a59b-fc28-4996-895f-6155461a0121"]}[Data],
+  #"Navigation 2" = #"Navigation 1"{[Id = "Files", ItemKind = "Folder"]}[Data],
+  #"Navigation 3" = #"Navigation 2"{[Name = "InformacionPedidos.csv"]}[Content],
+  #"Imported CSV" = Csv.Document(#"Navigation 3", [Delimiter = ";", Columns = 5, QuoteStyle = QuoteStyle.None]),
+  #"Promoted headers" = Table.PromoteHeaders(#"Imported CSV", [PromoteAllScalars = true]),
+  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"NumPedido", type text}, {"Precio", Int64.Type}, {"CantidadProductos", Int64.Type}, {"Categoria", type text}, {"Subcategoria", type text}}),
+  #"Removed blank rows" = Table.SelectRows(#"Changed column type", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+  #"Changed column type 1" = Table.TransformColumnTypes(#"Removed blank rows", {{"Precio", Currency.Type}}),
+  #"Removed duplicates" = Table.Distinct(#"Changed column type 1"),
+  #"Replaced value" = Table.ReplaceValue(#"Removed duplicates", "Viaje", "Varios Electrónica", Replacer.ReplaceText, {"Subcategoria"}),
+  #"Replaced value 1" = Table.ReplaceValue(#"Replaced value", "Naranja", "Varios Electrónica", Replacer.ReplaceText, {"Subcategoria"}),
+  #"Replaced value 2" = Table.ReplaceValue(#"Replaced value 1", "Manzanas", "Varios Electrónica", Replacer.ReplaceText, {"Subcategoria"}),
+  #"Added custom" = Table.AddColumn(#"Replaced value 2", "PrecioTotal", each [Precio] * [CantidadProductos]),
+  #"Changed column type 2" = Table.TransformColumnTypes(#"Added custom", {{"PrecioTotal", Int64.Type}, {"Precio", Int64.Type}})
+in
+  #"Changed column type 2"
